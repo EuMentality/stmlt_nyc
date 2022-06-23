@@ -1,11 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import requests   
 import pytz
 from datetime import datetime
-from src.model import make_prediction
-from src.features import add_features
-
 
 
 def user_trip_info():
@@ -42,15 +40,13 @@ df = pd.DataFrame(x, index=[0])
 st.subheader('User Input Parameters')
 st.write(df)
 
+def predict(url, json_obj):
+    resp = requests.post(f'{url}',
+                    json=json_obj)
+    return resp.json()
 
-
-def predict(json_obj):
-    trip_params = pd.DataFrame({key: [value] for key, value in dict(json_obj).items()})
-    trip_params = add_features(trip_params, purpose='predict')
-    prediction = make_prediction(trip_params)
-    return prediction
-
+url = 'https://taxi-nyc-fastapi.herokuapp.com/predict'
 
 if st.button('predict trip duration'):
-    st.write(f'The duration of your trip will be {round(predict(x))} minute')
+    st.write(predict(url, x))
 
