@@ -3,3 +3,4 @@ geopy==2.2.0
 osmnx==0.16.1
 folium==0.12.1
 streamlit-folium==0.6.3
+PyYAML==6.0

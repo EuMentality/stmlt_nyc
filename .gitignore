@@ -1,12 +1,6 @@
 venv
 .DS_Store
+__pycache__
 cli.txt
-config
 src/.DS_Store
 src/__pycache__/__init__.cpython-39.pyc
-src/features/__pycache__/__init__.cpython-39.pyc
-src/features/__pycache__/add_features.cpython-39.pyc
-src/model/__pycache__/__init__.cpython-39.pyc
-src/model/__pycache__/make_prediction.cpython-39.pyc
-src/data/clean_data.py
-src/data/get_data.py

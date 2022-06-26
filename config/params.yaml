@@ -1,0 +1,10 @@
+backend:
+  url:
+    'https://taxi-nyc-fastapi.herokuapp.com/predict'
+
+map:
+  width:
+    800
+  height:
+    650
+
