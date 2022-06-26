@@ -14,7 +14,7 @@ url_backend = cfg['backend']['url']
 map_with = cfg['map']['width']
 map_height = cfg['map']['height']
 
-# 1. Sidebar Settings
+# 2. Sidebar Settings
 st.sidebar.header('Information About The Trip')
 st.sidebar.subheader('Follow this link:  [Google Maps](https://www.google.com/maps/place/Manhattan,+New+York,+NY,+USA/@40.7604865,-73.9767845,14342m/data=!3m1!1e3!4m5!3m4!1s0x89c2588f046ee661:0xa0b3281fcecc08c!8m2!3d40.7830603!4d-73.9712488)')
 page_names = ['Enter Address', 'Enter Coordinates']
@@ -56,7 +56,7 @@ trip_params = {'pickup_latitude': pickup_latitude,
 start_trip_coords = (pickup_latitude, pickup_longitude)
 end_trip_coords = (dropoff_latitude, dropoff_longitude)
 
-# 2. Main Page Seggings
+# 3. Main Page Seggings
 st.write(' # Manhattan Taxi Trip')
 ox.config(log_console=True, use_cache=True)
 if st.sidebar.button('Predict Trip Duration!'):
