@@ -12,8 +12,8 @@ Frontend [Streamlit](https://share.streamlit.io/eumentality/stmlt_nyc/main/main_
     │
     ├── .gitignore               <- gitignore configuration.
     │                    
-    ├── frontend_app.py          <- Streamlit "frontend" app.
-    │
     ├── README.md                <- Frontend description.
+    │
+    ├── main_app.py              <- Streamlit "frontend" app.
     │
     └── requirements.txt         <- Requirements for env.
