@@ -9,7 +9,9 @@ Frontend [Streamlit](https://share.streamlit.io/eumentality/stmlt_nyc/main/main_
     │   ├── config.py            <- Import config.
     │   ├── predict.py           <- Post request to Backend for predicting Trip Duration.
     │   └── ptr_manh.jpg         <- Main picture.
-    │                     
+    │
+    ├── .gitignore               <- gitignore configuration.
+    │                    
     ├── frontend_app.py          <- Streamlit "frontend" app.
     │
     ├── README.md                <- Frontend description.
