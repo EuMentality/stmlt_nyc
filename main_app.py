@@ -1,13 +1,13 @@
 import pytz
 import streamlit as st
-import numpy as np
 import osmnx as ox
+from PIL import Image
 from datetime import datetime
 from geopy.geocoders import Nominatim
 from streamlit_folium import folium_static
 from src import find_shortest_route, predict_trip_duration, upload_config
 
-
+st.set_page_config(layout="wide")
 # 1. Upload Config
 cfg = upload_config('config/params.yaml')
 url_backend = cfg['backend']['url']
@@ -26,9 +26,8 @@ if page == 'Enter Coordinates':
     dropoff_longitude = st.sidebar.number_input('Dropoff Longitude', -74.020000, -73.9301, -73.990000, step=0.00001, format="%.6f")
     pickup_datetime = datetime.now(pytz.timezone('US/Eastern')).strftime("%Y-%m-%d %H:%M:%S")
     st.sidebar.write(f'Time Now in NYC:  {str(pickup_datetime)}')
-    passenger_count = st.sidebar.slider('Number of Passengers', 1, 9, 1)
-    vendor_id = int(np.random.choice([1, 2], 1)[0])
-    store_and_fwd_flag = str(np.random.choice(['N', 'Y'], 1)[0])
+    passenger_count = st.sidebar.slider('Number of Passengers', 1, 6, 1)
+    
 else:
     pickup_address = st.sidebar.text_input('Pickup Address', 'Empire State Building')
     dropoff_address = st.sidebar.text_input('Dropoff Address', 'Museum of the NYC')
@@ -41,28 +40,43 @@ else:
     dropoff_longitude = getloc_end.longitude
     pickup_datetime = datetime.now(pytz.timezone('US/Eastern')).strftime("%Y-%m-%d %H:%M:%S")
     st.sidebar.write(f'Time Now in NYC:  {str(pickup_datetime)}')
-    passenger_count = st.sidebar.slider('Number of Passengers', 1, 9, 1)
-    vendor_id = int(np.random.choice([1, 2], 1)[0])
-    store_and_fwd_flag = str(np.random.choice(['N', 'Y'], 1)[0])
+    passenger_count = st.sidebar.slider('Number of Passengers', 1, 6, 1)
 
 trip_params = {'pickup_latitude': pickup_latitude,
                 'pickup_longitude': pickup_longitude, 
                 'dropoff_latitude': dropoff_latitude,
                 'dropoff_longitude': dropoff_longitude,
                 'pickup_datetime': pickup_datetime,
-                'passenger_count': passenger_count,
-                'vendor_id': vendor_id,
-                'store_and_fwd_flag': store_and_fwd_flag}
+                'passenger_count': passenger_count}
+                
 start_trip_coords = (pickup_latitude, pickup_longitude)
 end_trip_coords = (dropoff_latitude, dropoff_longitude)
 
 # 3. Main Page Seggings
-st.write(' # Manhattan Taxi Trip')
+st. markdown("<h1 style='text-align: center; color: black;'>Manhattan Taxi Trip </h1>", unsafe_allow_html=True)
 ox.config(log_console=True, use_cache=True)
 if st.sidebar.button('Predict Trip Duration!'):
-    ans = predict_trip_duration(url_backend, trip_params)
-    ans_text = f'The duration of your trip will be {int(ans["prediction"])} minutes!'
-    with st.spinner('The route of the trip is being built ^_^'):
-            shortest_route = find_shortest_route(start_trip_coords, end_trip_coords)
-            st_data = folium_static(shortest_route, width=map_with, height=map_height)
-    st.success(ans_text)
+    col1, col2, col3 = st.columns([2, 7, 1])
+    with col1:
+        st.write("")
+    with col2:
+        ans = predict_trip_duration(url_backend, trip_params)
+        ans_text = f'The duration of your trip will be {int(ans["prediction"])} minutes!'
+        with st.spinner('The route of the trip is being built ^_^  :oncoming_taxi:'):
+                shortest_route = find_shortest_route(start_trip_coords, end_trip_coords)
+                st_data = folium_static(shortest_route, width=map_with, height=map_height)
+        st.success(ans_text)
+    with col3:
+        st.write("")
+else:
+    col1, col2, col3 = st.columns([0.8, 7, 1])
+    with col1:
+        st.write("")
+    with col2:
+        text = "Enter Trip Parameters: Left Panel"
+        st. markdown(f"<h5 style='text-align: center; color: gray;'>{text} </h5> ", unsafe_allow_html=True)
+        # Image
+        image = Image.open('src/ptr_manh.jpg')
+        st.image(image)
+    with col3:
+        st.write("")
